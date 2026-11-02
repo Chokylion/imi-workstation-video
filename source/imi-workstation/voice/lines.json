@@ -1,0 +1,13 @@
+[
+ {"id":"l01","text":"We're setting up a new location: the Indirect Material Inspection station.","voice":"af_heart","speed":0.95},
+ {"id":"l02","text":"One workbench, one material cart, one magnifying lamp, and seats for one or two operators.","voice":"af_heart","speed":0.95},
+ {"id":"l03","text":"The bench is fifteen hundred fifty millimeters long, seven hundred fifty deep, and twenty-two hundred tall.","voice":"af_heart","speed":0.95,"asr":"The bench is 1550 mm long, 750 deep, and 2200 tall."},
+ {"id":"l04","text":"A blue, powder-coated steel frame carries a twenty-five millimeter white laminate top.","voice":"af_heart","speed":0.95},
+ {"id":"l05","text":"On the left, a stainless steel cart brings material in, and takes it back when the check is done.","voice":"af_heart","speed":0.95},
+ {"id":"l06","text":"The L E D panel reaches seven hundred millimeters forward, on angled brackets, lighting the whole worktop.","voice":"af_heart","speed":0.95,"asr":"The LED panel reaches 700mm forward on angled brackets lighting the whole worktop."},
+ {"id":"l07","text":"At the left rear corner, an E S D magnifying lamp swings over the center, for close visual checks.","voice":"af_heart","speed":0.95,"asr":"At the left rear corner, an ESD magnifying lamp swings over the center, for close visual checks."},
+ {"id":"l08","text":"Above, a full-length cabinet, with one wide door and a key lock, keeps tools and samples secure.","voice":"af_heart","speed":0.95},
+ {"id":"l09","text":"Along the back, a four-outlet power rail.","voice":"af_heart","speed":0.95},
+ {"id":"l10","text":"Two blue E S D chairs, with foot rings and casters, seat one or two operators.","voice":"af_heart","speed":0.95,"asr":"Two blue ESD chairs, with foot rings and casters, seat one or two operators."},
+ {"id":"l11","text":"One location. Everything the inspector needs, within reach.","voice":"af_heart","speed":0.92}
+]

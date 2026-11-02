@@ -1,0 +1,20 @@
+Indirect Material Inspection Workstation: third-party material in the film
+
+Picture
+- three.js r170 (MIT), rendered through the Lemo-Opuscar toolkit (MIT, github.com/lemomo-ai/lemo-opuscar), Exploded Teardown style
+- HDRI "Photo Studio Loft Hall" from Poly Haven (CC0), used at low intensity for reflections
+- Fonts: Inter (SIL Open Font License 1.1, fonts/OFL-inter.txt), JetBrains Mono (SIL OFL 1.1, fonts/OFL-jetbrainsmono.txt)
+
+Voice
+- Narration synthesised offline with Kokoro-82M (Apache 2.0) via kokoro-onnx (MIT), voice af_heart
+- Speech check: faster-whisper (MIT) with Systran/faster-whisper-base.en
+
+Music and sound
+- Marimba, vibraphone, bowed vibraphone, glockenspiel, hi-hat: Versilian Community Sample Library (VCSL), CC0 1.0. Thanks to Versilian Studios / Sam Gossner.
+- Bass, kick and all foley synthesised in code (mix.py)
+
+Direction
+- Voice-performance plan and stage review protocol from OpenMontage (github.com/calesthio/OpenMontage): skills/meta/voice-performance-director.md, skills/meta/reviewer.md
+
+Content
+- All dimensions from the user's specification sheet (see FACTS.md). The model is a 3D illustration built from that sheet, not a manufacturing drawing.
