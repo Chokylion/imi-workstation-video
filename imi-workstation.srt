@@ -1,0 +1,43 @@
+1
+00:00:00,550 --> 00:00:05,780
+We're setting up a new location: the Indirect Material Inspection station.
+
+2
+00:00:05,850 --> 00:00:12,302
+One workbench, one material cart, one magnifying lamp, and seats for 1 or 2 operators.
+
+3
+00:00:13,550 --> 00:00:20,251
+The bench is 1550 mm long, 750 deep, and 2200 tall.
+
+4
+00:00:21,550 --> 00:00:27,280
+A blue, powder-coated steel frame carries a 25 mm white laminate top.
+
+5
+00:00:27,350 --> 00:00:33,170
+On the left, a stainless steel cart brings material in, and takes it back when the check is done.
+
+6
+00:00:35,250 --> 00:00:42,627
+The LED panel reaches 700 mm forward, on angled brackets, lighting the whole worktop.
+
+7
+00:00:42,950 --> 00:00:50,103
+At the left rear corner, an ESD magnifying lamp swings over the center, for close visual checks.
+
+8
+00:00:50,850 --> 00:00:57,180
+Above, a full-length cabinet, with one wide door and a key lock, keeps tools and samples secure.
+
+9
+00:00:57,250 --> 00:01:00,137
+Along the back, a 4-outlet power rail.
+
+10
+00:01:01,550 --> 00:01:07,277
+Two blue ESD chairs, with foot rings and casters, seat 1 or 2 operators.
+
+11
+00:01:09,950 --> 00:01:14,331
+One location. Everything the inspector needs, within reach.
