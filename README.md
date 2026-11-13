@@ -1,16 +1,30 @@
 # Indirect Material Inspection Workstation: 3D explainer video
 
-![preview](preview.gif)
+![preview](preview-v2.gif)
 
 **▶ Watch:** https://chokylion.github.io/imi-workstation-video/
-**⬇ Download:** [imi-workstation.mp4](https://github.com/Chokylion/imi-workstation-video/releases/latest/download/imi-workstation.mp4) (80 s, 1920×1080, English narration and subtitles)
+**⬇ Download v2:** [imi-workstation-v2.mp4](https://github.com/Chokylion/imi-workstation-video/releases/download/v2/imi-workstation-v2.mp4) (111 s, 1920×1080, English narration and subtitles)
 **🛠 How I made it, and how you can too:** [HOW-I-MADE-THIS.md](HOW-I-MADE-THIS.md): every skill and tool used, my exact prompts, a copy-paste prompt, requirements and setup.
 
-The proposed location for indirect material inspection:
-- a workbench (1550 × 750 × 2200 mm) with a blue powder-coated steel frame and a white laminate top
-- a lockable upper cabinet, an LED linear light and a 4-outlet power rail
-- a stainless steel material cart on the left
-- an ESD LED magnifying lamp at the left rear corner
+The proposed location for indirect material inspection (**v2**, from the updated specification slides):
+- a workbench (1550 × 750 × 2200 mm, worktop at 880–900 mm) with a blue powder-coated steel frame and a 30 mm white ESD dissipative laminate top
+- a lower shelf in the same laminate, with a stainless steel L-angle edge
+- a lockable upper cabinet (1550 × 300 × 400 mm, no shelves inside) holding the measuring tools: digital verniers (1000 mm and 200 mm), a micrometer with stand, a thickness gauge, a tape measure and a steel ruler
+- an LED linear light and a 4-outlet power rail
+- a 2-level stainless steel material cart (750 × 500 × 900 mm) and a black ESD waste bin with a push lid on the left
+- an 8× ESD LED magnifying lamp at the left rear corner
+- a notebook computer on the right
 - two blue ESD operator chairs for 1–2 operators
+- shared from nearby areas: a surface resistance meter, a voltage meter and a Keyence digital microscope
 
-Made entirely with AI tools: Claude Code + [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) (Exploded Teardown style) + [OpenMontage](https://github.com/calesthio/OpenMontage) directing skills. The 3D model is built from the specification sheet and is an illustration, not a manufacturing drawing. Every number shown is listed against the spec in [FACTS.md](FACTS.md); assets and licences are in [CREDITS](CREDITS); the full film source is in [`source/`](source/imi-workstation/).
+Made entirely with AI tools: Claude Code + [lemo-opuscar](https://github.com/lemomo-ai/lemo-opuscar) (Exploded Teardown style) + [OpenMontage](https://github.com/calesthio/OpenMontage) directing skills. The 3D model is built from the specification and is an illustration, not a manufacturing drawing.
+
+Other files:
+- [FACTS-v2.md](FACTS-v2.md): every number, traced to its slide, plus the conflicts between the slides.
+- [CREDITS](CREDITS): assets and licences.
+- [`source/imi-workstation-v2/`](source/imi-workstation-v2/): the full film source.
+
+**Version 1** (2 Nov 2026, first spec, 80 s):
+- [imi-workstation.mp4](https://github.com/Chokylion/imi-workstation-video/releases/download/v1/imi-workstation.mp4)
+- [FACTS.md](FACTS.md)
+- [`source/imi-workstation/`](source/imi-workstation/)

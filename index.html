@@ -1,28 +1,49 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Indirect Material Inspection Workstation: 3D explainer</title>
-<meta property="og:title" content="Indirect Material Inspection Workstation"><meta property="og:image" content="poster.jpg">
+<meta property="og:title" content="Indirect Material Inspection Workstation"><meta property="og:image" content="poster-v2.jpg">
 <style>
 body{margin:0;background:#0f1012;color:#f1efe9;font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
 main{max-width:1100px;margin:0 auto;padding:32px 20px 48px}
 .k{color:#ff6b3d;font:600 13px/1 ui-monospace,Consolas,monospace;letter-spacing:.12em}
 h1{font-weight:300;font-size:clamp(28px,4vw,44px);margin:10px 0 18px}
+h2{font-weight:400;font-size:22px;margin:48px 0 12px}
 video{width:100%;border-radius:10px;background:#000;box-shadow:0 10px 40px #0008}
+video.old{max-width:640px}
 .row{display:flex;gap:12px;flex-wrap:wrap;margin:18px 0}
 a.btn{display:inline-block;padding:12px 20px;border-radius:8px;background:#ff6b3d;color:#111;font-weight:600;text-decoration:none}
 a.btn.alt{background:#2a2c30;color:#f1efe9}
 p.s{color:#a9a7a1;font-size:14px}
 </style></head><body><main>
-<div class="k">PROPOSED LOCATION</div>
+<div class="k">PROPOSED LOCATION · V2 · UPDATED SPEC</div>
 <h1>Indirect Material Inspection Workstation</h1>
-<video controls preload="metadata" poster="poster.jpg" playsinline>
+<video controls preload="metadata" poster="poster-v2.jpg" playsinline>
+  <source src="imi-workstation-v2.mp4" type="video/mp4">
+</video>
+<div class="row">
+  <a class="btn" href="imi-workstation-v2.mp4" download>Download video (MP4, 111 s, 1080p)</a>
+  <a class="btn alt" href="imi-workstation-v2.srt" download>Download subtitles (.srt)</a>
+  <a class="btn alt" href="https://github.com/Chokylion/imi-workstation-video/blob/main/HOW-I-MADE-THIS.md">How I made this (skills, prompts, setup)</a>
+</div>
+<p>The workstation includes:</p>
+<ul>
+  <li>A workbench with a 30 mm ESD dissipative laminate worktop.</li>
+  <li>A lower shelf.</li>
+  <li>A lockable upper cabinet that holds the measuring tools.</li>
+  <li>A 2-level stainless steel material cart.</li>
+  <li>A black ESD waste bin.</li>
+  <li>An 8× ESD LED magnifying lamp for visual inspection.</li>
+  <li>A notebook computer.</li>
+  <li>Two blue ESD chairs for 1–2 operators.</li>
+</ul>
+<p class="s">The 3D model is built from the specification slides and made entirely with AI tools. It is an illustration, not a manufacturing drawing. Subtitles are burned into the video. Every number is traced to its slide in <a href="https://github.com/Chokylion/imi-workstation-video/blob/main/FACTS-v2.md" style="color:#a9a7a1">FACTS-v2.md</a>.</p>
+
+<h2>Version 1 (2 Nov 2026, first spec)</h2>
+<video class="old" controls preload="none" poster="poster.jpg" playsinline>
   <source src="imi-workstation.mp4" type="video/mp4">
 </video>
 <div class="row">
-  <a class="btn" href="imi-workstation.mp4" download>Download video (MP4, 80 s, 1080p)</a>
-  <a class="btn alt" href="imi-workstation.srt" download>Download subtitles (.srt)</a>
-  <a class="btn alt" href="https://github.com/Chokylion/imi-workstation-video/blob/main/HOW-I-MADE-THIS.md">How I made this (skills, prompts, setup)</a>
+  <a class="btn alt" href="imi-workstation.mp4" download>Download v1 (MP4, 80 s)</a>
+  <a class="btn alt" href="imi-workstation.srt" download>v1 subtitles (.srt)</a>
 </div>
-<p>The workstation: a workbench with a lockable upper cabinet, a stainless steel material cart, an ESD LED magnifying lamp for visual inspection, and two blue ESD chairs for 1–2 operators.</p>
-<p class="s">The 3D model is built from the specification sheet and made entirely with AI tools. It is an illustration, not a manufacturing drawing. Subtitles are burned into the video.</p>
 </main></body></html>

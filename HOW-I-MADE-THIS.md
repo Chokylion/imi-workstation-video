@@ -1,10 +1,16 @@
 # How I made this video, and how you can make one too
 
-![preview](preview.gif)
+![preview](preview-v2.gif)
 
-An 80-second 3D explainer, 1080p, with an English narrator, subtitles, music and sound effects. It was made **only with AI tools**: no camera, no 3D software, no video editor and no stock footage. I described what I wanted to an AI coding agent (**Claude Code**). The agent built the 3D model in code from a spec sheet, wrote the script, generated the voice, composed the music and rendered the film on my laptop.
+A 3D explainer in 1080p, with an English narrator, subtitles, music and sound effects:
+- **v2:** 111 s, built from the updated PowerPoint spec.
+- **v1:** 80 s, built from the first spec.
 
-▶ **Watch:** https://chokylion.github.io/imi-workstation-video/ · ⬇ **Download:** [imi-workstation.mp4](https://github.com/Chokylion/imi-workstation-video/releases/latest/download/imi-workstation.mp4) · 🧩 **Source:** [`source/imi-workstation/`](source/imi-workstation/)
+It was made **only with AI tools**: no camera, no 3D software, no video editor and no stock footage. I described what I wanted to an AI coding agent (**Claude Code**). The agent built the 3D model in code from the spec, wrote the script, generated the voice, composed the music and rendered the film on my laptop.
+
+▶ **Watch:** https://chokylion.github.io/imi-workstation-video/
+⬇ **Download:** [v2](https://github.com/Chokylion/imi-workstation-video/releases/download/v2/imi-workstation-v2.mp4) · [v1](https://github.com/Chokylion/imi-workstation-video/releases/download/v1/imi-workstation.mp4)
+🧩 **Source:** [`source/imi-workstation-v2/`](source/imi-workstation-v2/) · [`source/imi-workstation/`](source/imi-workstation/)
 
 ---
 
@@ -18,6 +24,7 @@ An 80-second 3D explainer, 1080p, with an English narrator, subtitles, music and
 | 4 | **superpowers** (Claude Code plugin) | `using-superpowers` loads at the start of every session and makes the agent check for a matching skill before acting | https://github.com/obra/superpowers (Claude Code plugin) |
 | 5 | **My own working-style rules** (`~/.claude/CLAUDE.md`) | Plan before building, ask **one question at a time**, verify before saying "done", then a final "CEO review" against the original request and a short report | see section 5 |
 | 6 | **Claude Code plan mode** | The agent first wrote a plan and I approved it before anything was installed | built into Claude Code |
+| 7 | **pptx skill** (Anthropic skills, used for v2) | Read my PowerPoint: every slide's text, plus the CAD view, the hand sketches and the product photos inside it, so the v2 model matches the updated spec | built into Claude Code (`anthropic-skills:pptx`) |
 
 **Engines underneath** (installed by lemo-opuscar, all free):
 - **three.js**: the 3D model and rendering.
@@ -68,6 +75,24 @@ An 80-second 3D explainer, 1080p, with an English narrator, subtitles, music and
 1. Style: **Exploded Teardown**.
 2. The person speaking: **an AI narrator voice**.
 
+**Prompt 4** (v2, 13 Nov 2026: the updated spec as a PowerPoint file)
+> "C:\Users\...\Downloads\Indirect Material location.pptx" now try to do this ไปแกะข้อมูลมาละกัน *(Thai: "go and dig the information out of it")*
+
+The agent read all 4 slides: the spec text, a CAD view, two hand sketches, product photos and the list of tools in the cabinet. It listed what had changed and flagged where the slides disagree, for example 30 mm vs 25 mm worktop and 4 vs 8 outlets. Then it asked me one question: update the existing video, make a new one, or only summarise the data. I chose **"Video v2 (update existing)"**.
+
+v2 adds:
+- the 30 mm ESD laminate worktop
+- the lower shelf with its stainless edge
+- the measuring tools inside the cabinet
+- the 2-level cart (750 × 500 × 900)
+- the black ESD waste bin
+- the notebook computer
+- the 8× magnifier
+- the worktop height (880–900 mm, from the sketch)
+- the equipment shared from other areas, on the end card
+
+Every number is traced to its slide in [`FACTS-v2.md`](FACTS-v2.md).
+
 That's everything I typed. The agent did the rest.
 
 ---
@@ -96,6 +121,7 @@ check every voice line with speech-to-text, and run the reading-time check befor
 
 Tips:
 - Reference images help the agent place parts the way you want.
+- You don't have to type the spec: give the file path of a PowerPoint (or PDF) and say "read the data from this". The agent reads the text, the drawings and the photos, and tells you where they contradict each other.
 - Any style in the lemo-opuscar gallery can replace "Exploded Teardown": https://lemomo-ai.github.io/lemo-opuscar/
 - For your own voice, say "I'll record the narration": the agent writes the script and times everything to your recording.
 
@@ -141,9 +167,9 @@ claude plugin install lemo-opuscar@lemolab      # then in Claude Code: /lemo-opu
 
 **Rebuild this exact video from the source in this repo:**
 ```sh
-cp -r source/imi-workstation ~/lemo-opuscar/films/
-# fonts (SIL OFL): put Inter.ttf and JetBrainsMono.ttf from github.com/google/fonts (ofl/inter, ofl/jetbrainsmono) into films/imi-workstation/fonts/
-sh ~/lemo-opuscar/films/imi-workstation/build.sh        # voice check → render → mix → master → .srt → checks
+cp -r source/imi-workstation-v2 ~/lemo-opuscar/films/   # or source/imi-workstation for v1
+# fonts (SIL OFL): put Inter.ttf and JetBrainsMono.ttf from github.com/google/fonts (ofl/inter, ofl/jetbrainsmono) into films/imi-workstation-v2/fonts/
+sh ~/lemo-opuscar/films/imi-workstation-v2/build.sh        # voice check → render → mix → master → .srt → checks
 ```
 
 ---
