@@ -1,6 +1,7 @@
 ---
 name: skill-router
-description: Auto-detect the user's task, select and chain the right skills from the local library, show the pipeline for confirmation, then execute the chain in order. Use at the start of any non-trivial task when the best skill or skill-chain is unclear, or when the user asks "which skill should I use". Trigger: /router.
+description: >-
+  Auto-detect the user's task, select and chain the right skills from the local library, show the pipeline for confirmation, then execute the chain in order. Use at the start of any non-trivial task when the best skill or skill-chain is unclear, or when the user asks "which skill should I use". Trigger: /router.
 ---
 
 # Skill Router

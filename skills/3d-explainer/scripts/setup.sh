@@ -1,36 +1,26 @@
 #!/bin/sh
-# One command to get everything this video needed, for Claude Code.
-#   sh setup.sh                 libraries (tested versions), packages, voice/music assets, skills, superpowers
-#   sh setup.sh --skills-only   only copy skills/ into ~/.claude/skills
-#   sh setup.sh --add-rules     also append CLAUDE.md to ~/.claude/CLAUDE.md (once; your file is backed up first)
-#   sh setup.sh --check         report what is installed; change nothing
-# Runs in Git Bash on Windows, and in any terminal on macOS / Linux. Safe to run again.
+# Sets up the film engine this skill needs. Runs once; safe to run again.
+#   sh setup.sh           download lemo-opuscar + OpenMontage (tested versions), packages, voice/music assets (about 2 GB, 10-20 min)
+#   sh setup.sh --check   report what is installed; change nothing
+# Runs in Git Bash on Windows, and in any terminal on macOS / Linux.
 set -e
-KIT=$(cd "$(dirname "$0")" && pwd)
-
 LEMO_URL=https://github.com/lemomo-ai/lemo-opuscar.git
 LEMO_SHA=bebbbe1aa92a3cb4bb6f83500e61b23a17d1aa00     # the version that made this video
 OM_URL=https://github.com/calesthio/OpenMontage.git
 OM_SHA=195eab24478dc9363326aec437aefc3701635ddf
 LEMO=${LEMO_OPUSCAR_HOME:-$HOME/lemo-opuscar}
 OM=${OPENMONTAGE_HOME:-$HOME/OpenMontage}
-SKILLS=$HOME/.claude/skills
-BACKUP=$HOME/.claude/skills-backup                    # outside skills/, so old copies never load
-RULES=$HOME/.claude/CLAUDE.md
-MARK_BEGIN='<!-- imi-workstation-video rules: begin -->'
-MARK_END='<!-- imi-workstation-video rules: end -->'
 
-MODE=all; ADD_RULES=0
+MODE=all
 for a in "$@"; do
   case $a in
-    --skills-only) MODE=skills ;;
     --check) MODE=check ;;
-    --add-rules) ADD_RULES=1 ;;
-    -h|--help) sed -n '2,7p' "$0"; exit 0 ;;
+    -h|--help) sed -n '2,5p' "$0"; exit 0 ;;
     *) echo "unknown option: $a (try: sh setup.sh --help)"; exit 1 ;;
   esac
 done
 case "$(uname -s)" in MINGW*|MSYS*|CYGWIN*) WIN=1 ;; *) WIN=0 ;; esac
+HERE=$(pwd)
 
 ok()   { echo "  ✓ $*"; }
 warn() { echo "  ! $*"; }
@@ -40,7 +30,7 @@ short() { echo "$1" | cut -c1-7; }
 tools() {
   echo "== tools"
   miss=0
-  for t in git node ffmpeg uv claude; do
+  for t in git node ffmpeg uv; do
     if command -v "$t" >/dev/null 2>&1; then ok "$t"; else warn "$t not found"; miss=1; fi
   done
   if command -v node >/dev/null 2>&1; then
@@ -54,7 +44,6 @@ tools() {
   if [ $miss = 1 ]; then
     if [ $WIN = 1 ]; then echo "    Windows: winget install Git.Git OpenJS.NodeJS.LTS Gyan.FFmpeg astral-sh.uv   (then reopen Git Bash)"
     else echo "    macOS: brew install git node ffmpeg uv    Linux: your package manager, and https://docs.astral.sh/uv/"; fi
-    echo "    Claude Code: https://claude.com/claude-code"
   fi
   return $miss
 }
@@ -109,57 +98,11 @@ lemo_deps() {
   [ -f core/assets/polyhaven/photo_studio_loft_hall_2k.hdr ] || sh tools/fetch.sh hdri
   [ -f core/tts/kokoro-v1.0.onnx ] || sh tools/fetch.sh voice
   [ -d core/audio/instruments/vcsl ] || sh tools/fetch.sh instruments vcsl
-  cd "$KIT"
+  cd "$HERE"
   lemo_ready && ok "packages, voice model, studio lighting and instruments" || die "lemo-opuscar is not complete: read the messages above"
 }
 
-skills() {
-  echo "== skills -> $SKILLS"
-  for s in "$KIT"/skills/*/; do
-    n=$(basename "$s")
-    if [ -d "$SKILLS/$n" ] && diff -rq "$s" "$SKILLS/$n" >/dev/null 2>&1; then ok "$n (up to date)"; continue; fi
-    if [ "$MODE" = check ]; then
-      if [ -d "$SKILLS/$n" ]; then warn "$n is installed but differs from this repo"; else warn "$n not installed"; fi
-      continue
-    fi
-    if [ -d "$SKILLS/$n" ]; then
-      b="$BACKUP/$n-$(date +%Y%m%d-%H%M%S)"; mkdir -p "$BACKUP"; mv "$SKILLS/$n" "$b"; warn "your old $n was moved to $b"
-    fi
-    mkdir -p "$SKILLS"; cp -r "$s" "$SKILLS/$n"; ok "$n installed"
-  done
-}
-
-rules() {
-  if [ -f "$RULES" ] && grep -qF "$MARK_BEGIN" "$RULES"; then ok "working-style rules are in $RULES"; return 0; fi
-  if [ "$MODE" = check ] || [ $ADD_RULES = 0 ]; then echo "  - working-style rules not added (optional: sh setup.sh --add-rules)"; return 0; fi
-  mkdir -p "$(dirname "$RULES")"
-  if [ -f "$RULES" ]; then cp "$RULES" "$RULES.bak-$(date +%Y%m%d-%H%M%S)"; fi
-  { if [ -s "$RULES" ]; then echo; fi
-    echo "$MARK_BEGIN"; sed -n '/^# skill-router/,$p' "$KIT/CLAUDE.md"; echo "$MARK_END"; } >> "$RULES"
-  ok "working-style rules appended to $RULES"
-}
-
-plugins() {
-  echo "== Claude Code plugin"
-  command -v claude >/dev/null 2>&1 || { warn "claude not found; after installing Claude Code run: claude plugin install superpowers@claude-plugins-official"; return 0; }
-  if claude plugin list 2>/dev/null | grep -q 'superpowers@'; then ok "superpowers"; return 0; fi
-  [ "$MODE" = check ] && { warn "superpowers not installed"; return 0; }
-  if claude plugin install superpowers@claude-plugins-official; then ok "superpowers installed"
-  else warn "could not install superpowers; inside Claude Code type: /plugin install superpowers@claude-plugins-official"; fi
-}
-
-case $MODE in
-  skills) skills; rules ;;
-  check)
-    tools || true
-    echo "== libraries"; lib lemo-opuscar "$LEMO" "$LEMO_URL" "$LEMO_SHA"; lib OpenMontage "$OM" "$OM_URL" "$OM_SHA"
-    lemo_deps; skills; rules; plugins ;;
-  all)
-    tools || die "install the missing tools above, then run this again"
-    echo "== libraries"; lib lemo-opuscar "$LEMO" "$LEMO_URL" "$LEMO_SHA"; lib OpenMontage "$OM" "$OM_URL" "$OM_SHA"
-    lemo_deps; skills; rules; plugins
-    echo
-    echo "Done. Open Claude Code and say, for example:"
-    echo "  use the 3d-explainer skill to make a video of <your item> from <path to your spec .pptx or .pdf>"
-    ;;
-esac
+tools || { [ "$MODE" = check ] || die "install the missing tools above, then run this again"; }
+echo "== libraries"; lib lemo-opuscar "$LEMO" "$LEMO_URL" "$LEMO_SHA"; lib OpenMontage "$OM" "$OM_URL" "$OM_SHA"
+lemo_deps
+[ "$MODE" = check ] || echo "Ready: the film engine is in $LEMO"

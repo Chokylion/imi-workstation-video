@@ -16,17 +16,17 @@ It was made **only with AI tools**: no camera, no 3D software, no video editor a
 
 ## 1. The tools and skills used
 
-**Get all of them with one command:** `sh setup.sh` (see [section 4](#4-what-you-need-and-how-to-set-it-up)). My own skills are in [`skills/`](skills/). Licences and tested versions of the others are in [`THIRD-PARTY.md`](THIRD-PARTY.md).
+**To make your own:** install the `3d-explainer` skill with one command (see [section 4](#4-what-you-need-and-how-to-set-it-up)). It sets up lemo-opuscar and OpenMontage by itself the first time. Licences and tested versions are in [`THIRD-PARTY.md`](THIRD-PARTY.md).
 
 | # | Tool / skill | What it did in this video | Where to get it |
 |---|---|---|---|
 | 1 | **Claude Code** (model: Claude Opus 5.5) | The AI agent that ran everything: read the guides, asked me questions, wrote all the code, checked the results | https://claude.com/claude-code |
-| 2 | **lemo-opuscar** (Lemo Lab), the main video skill | A library of 66 film styles made entirely in code. I used the **Exploded Teardown** style: photoreal 3D, the camera travels to each part, labels and dimension lines drawn on the object. It also provides the render tools (headless Chrome, frame by frame), the voice tools, the sampler and the mixer | `setup.sh` downloads the tested version · https://github.com/lemomo-ai/lemo-opuscar |
-| 3 | **OpenMontage**, the directing skills | Two of its skills: `skills/meta/voice-performance-director.md` (pace, pauses and emphasis for each narration line, with a test line first) and `skills/meta/reviewer.md` (a quality review after each stage). Only these two files are read; nothing to install | `setup.sh` downloads the tested version · https://github.com/calesthio/OpenMontage |
-| 4 | **3d-explainer** (my skill, written after the two videos) | Everything learned while making v1 and v2, as one skill: start from this film's source, trace every number, check the label timing **before** the 40-minute render, the Windows fixes, and the full list of final checks | [`skills/3d-explainer/`](skills/3d-explainer/) |
-| 5 | **skill-router** (my skill) | Picks and chains the right skills for a task, shows the plan, and finishes with the CEO review | [`skills/skill-router/`](skills/skill-router/) |
-| 6 | **My own working-style rules** (`~/.claude/CLAUDE.md`) | Plan before building, ask **one question at a time**, verify before saying "done", then a final "CEO review" against the original request and a short report | [`CLAUDE.md`](CLAUDE.md) (`sh setup.sh --add-rules`) |
-| 7 | **superpowers** (Claude Code plugin) | `using-superpowers` loads at the start of every session and makes the agent check for a matching skill before acting | `setup.sh` installs it · https://github.com/obra/superpowers |
+| 2 | **lemo-opuscar** (Lemo Lab), the main video skill | A library of 66 film styles made entirely in code. I used the **Exploded Teardown** style: photoreal 3D, the camera travels to each part, labels and dimension lines drawn on the object. It also provides the render tools (headless Chrome, frame by frame), the voice tools, the sampler and the mixer | the 3d-explainer skill downloads the tested version · https://github.com/lemomo-ai/lemo-opuscar |
+| 3 | **OpenMontage**, the directing skills | Two of its skills: `skills/meta/voice-performance-director.md` (pace, pauses and emphasis for each narration line, with a test line first) and `skills/meta/reviewer.md` (a quality review after each stage). Only these two files are read; nothing to install | the 3d-explainer skill downloads the tested version · https://github.com/calesthio/OpenMontage |
+| 4 | **3d-explainer** (my skill, written after the two videos) | Everything learned while making v1 and v2, as one skill: start from this film's source, trace every number, check the label timing **before** the 40-minute render, the Windows fixes, and the full list of final checks. Works in GitHub Copilot and Claude Code | [`skills/3d-explainer/`](skills/3d-explainer/) (one-command install, section 4) |
+| 5 | **skill-router** (my skill) | Picks and chains the right skills for a task, shows the plan, and finishes with the CEO review | [`skills/skill-router/`](skills/skill-router/) (Claude Code; optional) |
+| 6 | **My own working-style rules** (`~/.claude/CLAUDE.md`) | Plan before building, ask **one question at a time**, verify before saying "done", then a final "CEO review" against the original request and a short report | quoted in section 5; the 3d-explainer skill carries the parts it needs |
+| 7 | **superpowers** (Claude Code plugin) | `using-superpowers` loads at the start of every session and makes the agent check for a matching skill before acting | https://github.com/obra/superpowers (Claude Code; optional) |
 | 8 | **Claude Code plan mode** | The agent first wrote a plan and I approved it before anything was installed | built into Claude Code |
 | 9 | **pptx skill** (Anthropic skills, used for v2) | Read my PowerPoint: every slide's text, plus the CAD view, the hand sketches and the product photos inside it, so the v2 model matches the updated spec | built into Claude Code (`anthropic-skills:pptx`). It is Anthropic's, so it is not copied here; see [`THIRD-PARTY.md`](THIRD-PARTY.md) |
 
@@ -103,7 +103,7 @@ That's everything I typed. The agent did the rest.
 
 ## 3. A prompt you can copy for your own item
 
-**Short version** (after `sh setup.sh`, the 3d-explainer skill knows the rest):
+**Short version** (with the 3d-explainer skill installed, it knows the rest):
 
 ```text
 Use the 3d-explainer skill to make an English 3D explainer video of [your item] from [path to your .pptx / .pdf spec].
@@ -150,32 +150,22 @@ Tips:
 
 On Windows: `winget install Git.Git OpenJS.NodeJS.LTS Gyan.FFmpeg astral-sh.uv`, then reopen Git Bash.
 
-**Then one command does the rest** (Git Bash on Windows, or any terminal):
+**Then install the skill** (one command, in any terminal):
 ```sh
-git clone https://github.com/Chokylion/imi-workstation-video.git ~/imi-workstation-video
-cd ~/imi-workstation-video
-sh setup.sh --check        # optional: see what you already have (changes nothing)
-sh setup.sh                # first run downloads about 1.5 GB and takes 10–20 min
-sh setup.sh --add-rules    # optional: add my working-style rules to ~/.claude/CLAUDE.md
+npx -y skills add Chokylion/imi-workstation-video -g -a github-copilot -s 3d-explainer -y --copy
 ```
+- This works for GitHub Copilot: the app, the CLI and VS Code. For Claude Code, use `-a claude-code`.
+- The skill goes into `~/.copilot/skills/3d-explainer`.
+- The first time you ask for a video, the skill runs its own [`scripts/setup.sh`](skills/3d-explainer/scripts/setup.sh). It downloads lemo-opuscar and OpenMontage at the tested versions, plus their packages, voice model, studio lighting and instruments (about 2 GB, 10–20 minutes, once). It applies all the Windows fixes below. To run it yourself first: `sh ~/.copilot/skills/3d-explainer/scripts/setup.sh`.
 
-`setup.sh` does the following, and is safe to run again:
-- checks your tools
-- downloads lemo-opuscar and OpenMontage at the exact versions that made this video
-- installs their packages, the voice model, the studio lighting and the instruments, applying all the Windows fixes below
-- copies `skills/` into `~/.claude/skills`, moving any older copy to `~/.claude/skills-backup/` first
-- installs the superpowers plugin
-
-If a library is already cloned, it is left as it is. `setup.sh` only reports the version.
-
-<details><summary><b>Manual setup</b> (what setup.sh does, step by step)</summary>
+<details><summary><b>Manual setup</b> (what the skill's setup.sh does, step by step)</summary>
 
 ```sh
 cd ~
 git clone --depth 1 https://github.com/lemomo-ai/lemo-opuscar.git
 git clone --depth 1 https://github.com/calesthio/OpenMontage.git
 cd ~/lemo-opuscar
-export LEMO_OPUSCAR_HOME=$HOME/lemo-opuscar   # Windows: avoids a C:/ path bug in setup.sh
+export LEMO_OPUSCAR_HOME=$HOME/lemo-opuscar   # Windows: avoids a C:/ path bug in lemo-opuscar's setup.sh
 sh plugin/skills/lemo-opuscar/scripts/setup.sh deps            # npm packages + headless Chrome + Python venv
 export PYTHONUTF8=1
 sh tools/fetch.sh voice                 # Kokoro voice model (~350 MB)
@@ -259,22 +249,3 @@ For any non-trivial task:
 
 Credits and licences for everything in the film: [`CREDITS`](CREDITS).
 
----
-
-## 7. Teaching a co-worker (about 1 hour, plus the render)
-
-1. **Watch first (5 min).** Play the video together, then open [`FACTS-v2.md`](FACTS-v2.md). Every number in the film comes from the spec, and the slides that disagree are listed instead of hidden.
-2. **Install (20 min, mostly waiting).** On their PC: install the tools from section 4, then clone this repo and run `sh setup.sh`. Run `sh setup.sh --check` at the end; every line should show ✓.
-3. **Their own item (15 min of typing).**
-   - Open Claude Code in an empty folder and paste the short prompt from section 3, with their own spec file.
-   - The agent asks **one question at a time**: answer it.
-   - Before it builds anything, it shows `FACTS.md` (check the numbers together) and `TREATMENT.md` (the story and shot list).
-4. **Stills review (10 min).** The agent shows a contact sheet of stills before the long render. This is the cheap moment to ask for changes.
-5. **Render (25–40 min, unattended).** Keep the laptop plugged in, stop it from sleeping, and close heavy apps.
-6. **Check together (10 min).** The agent reports the speech check, the reading-time check, black frames, loudness and any gaps. Watch the film once with sound before sharing it.
-
-Words to know:
-- **Skill:** a folder of instructions Claude Code reads when a task matches.
-- **Plugin:** a packaged set of skills.
-- **Plan mode:** the agent writes a plan and waits for your OK.
-- **CEO review:** the agent re-reads your first request and scores its own work against it.
