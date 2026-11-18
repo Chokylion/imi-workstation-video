@@ -1,0 +1,5 @@
+*.sh text eol=lf
+*.md text
+*.mp4 binary
+*.jpg binary
+*.gif binary

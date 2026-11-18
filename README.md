@@ -6,6 +6,13 @@
 **⬇ Download v2:** [imi-workstation-v2.mp4](https://github.com/Chokylion/imi-workstation-video/releases/download/v2/imi-workstation-v2.mp4) (111 s, 1920×1080, English narration and subtitles)
 **🛠 How I made it, and how you can too:** [HOW-I-MADE-THIS.md](HOW-I-MADE-THIS.md): every skill and tool used, my exact prompts, a copy-paste prompt, requirements and setup.
 
+**🧰 Make your own:**
+- [`skills/`](skills/): my Claude Code skills, `3d-explainer` and `skill-router`.
+- [`setup.sh`](setup.sh): one command that installs everything at the tested versions.
+- [`CLAUDE.md`](CLAUDE.md): my working-style rules.
+- [`THIRD-PARTY.md`](THIRD-PARTY.md): licences.
+- [A one-hour lesson for teaching a co-worker](HOW-I-MADE-THIS.md#7-teaching-a-co-worker-about-1-hour-plus-the-render).
+
 The proposed location for indirect material inspection (**v2**, from the updated specification slides):
 - a workbench (1550 × 750 × 2200 mm, worktop at 880–900 mm) with a blue powder-coated steel frame and a 30 mm white ESD dissipative laminate top
 - a lower shelf in the same laminate, with a stainless steel L-angle edge

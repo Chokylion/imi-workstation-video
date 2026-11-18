@@ -16,15 +16,19 @@ It was made **only with AI tools**: no camera, no 3D software, no video editor a
 
 ## 1. The tools and skills used
 
+**Get all of them with one command:** `sh setup.sh` (see [section 4](#4-what-you-need-and-how-to-set-it-up)). My own skills are in [`skills/`](skills/). Licences and tested versions of the others are in [`THIRD-PARTY.md`](THIRD-PARTY.md).
+
 | # | Tool / skill | What it did in this video | Where to get it |
 |---|---|---|---|
 | 1 | **Claude Code** (model: Claude Opus 5.5) | The AI agent that ran everything: read the guides, asked me questions, wrote all the code, checked the results | https://claude.com/claude-code |
-| 2 | **lemo-opuscar** (Lemo Lab), the main video skill | A library of 66 film styles made entirely in code. I used the **Exploded Teardown** style: photoreal 3D, the camera travels to each part, labels and dimension lines drawn on the object. It also provides the render tools (headless Chrome, frame by frame), the voice tools, the sampler and the mixer | https://github.com/lemomo-ai/lemo-opuscar |
-| 3 | **OpenMontage**, the directing skills | Two of its skills: `skills/meta/voice-performance-director.md` (pace, pauses and emphasis for each narration line, with a test line first) and `skills/meta/reviewer.md` (a quality review after each stage) | https://github.com/calesthio/OpenMontage |
-| 4 | **superpowers** (Claude Code plugin) | `using-superpowers` loads at the start of every session and makes the agent check for a matching skill before acting | https://github.com/obra/superpowers (Claude Code plugin) |
-| 5 | **My own working-style rules** (`~/.claude/CLAUDE.md`) | Plan before building, ask **one question at a time**, verify before saying "done", then a final "CEO review" against the original request and a short report | see section 5 |
-| 6 | **Claude Code plan mode** | The agent first wrote a plan and I approved it before anything was installed | built into Claude Code |
-| 7 | **pptx skill** (Anthropic skills, used for v2) | Read my PowerPoint: every slide's text, plus the CAD view, the hand sketches and the product photos inside it, so the v2 model matches the updated spec | built into Claude Code (`anthropic-skills:pptx`) |
+| 2 | **lemo-opuscar** (Lemo Lab), the main video skill | A library of 66 film styles made entirely in code. I used the **Exploded Teardown** style: photoreal 3D, the camera travels to each part, labels and dimension lines drawn on the object. It also provides the render tools (headless Chrome, frame by frame), the voice tools, the sampler and the mixer | `setup.sh` downloads the tested version · https://github.com/lemomo-ai/lemo-opuscar |
+| 3 | **OpenMontage**, the directing skills | Two of its skills: `skills/meta/voice-performance-director.md` (pace, pauses and emphasis for each narration line, with a test line first) and `skills/meta/reviewer.md` (a quality review after each stage). Only these two files are read; nothing to install | `setup.sh` downloads the tested version · https://github.com/calesthio/OpenMontage |
+| 4 | **3d-explainer** (my skill, written after the two videos) | Everything learned while making v1 and v2, as one skill: start from this film's source, trace every number, check the label timing **before** the 40-minute render, the Windows fixes, and the full list of final checks | [`skills/3d-explainer/`](skills/3d-explainer/) |
+| 5 | **skill-router** (my skill) | Picks and chains the right skills for a task, shows the plan, and finishes with the CEO review | [`skills/skill-router/`](skills/skill-router/) |
+| 6 | **My own working-style rules** (`~/.claude/CLAUDE.md`) | Plan before building, ask **one question at a time**, verify before saying "done", then a final "CEO review" against the original request and a short report | [`CLAUDE.md`](CLAUDE.md) (`sh setup.sh --add-rules`) |
+| 7 | **superpowers** (Claude Code plugin) | `using-superpowers` loads at the start of every session and makes the agent check for a matching skill before acting | `setup.sh` installs it · https://github.com/obra/superpowers |
+| 8 | **Claude Code plan mode** | The agent first wrote a plan and I approved it before anything was installed | built into Claude Code |
+| 9 | **pptx skill** (Anthropic skills, used for v2) | Read my PowerPoint: every slide's text, plus the CAD view, the hand sketches and the product photos inside it, so the v2 model matches the updated spec | built into Claude Code (`anthropic-skills:pptx`). It is Anthropic's, so it is not copied here; see [`THIRD-PARTY.md`](THIRD-PARTY.md) |
 
 **Engines underneath** (installed by lemo-opuscar, all free):
 - **three.js**: the 3D model and rendering.
@@ -38,7 +42,7 @@ It was made **only with AI tools**: no camera, no 3D software, no video editor a
 - `higgsfield-ai/higgsfield` is a GPU training framework, not a video generator.
 - `debpalash/VoiceStudio` wasn't needed, because lemo-opuscar has its own offline voice.
 
-**Other skills I have that suit this kind of work** (not used here): `superpowers:brainstorming`, `superpowers:verification-before-completion`, `remotion-motion-graphics` (React/Remotion motion graphics), `chonimate` (2D story reels), `skill-router` (picks and chains skills automatically).
+**Other skills I have that suit this kind of work** (not used here): `superpowers:brainstorming`, `superpowers:verification-before-completion`, `remotion-motion-graphics` (React/Remotion motion graphics), `chonimate` (2D story reels).
 
 ---
 
@@ -99,7 +103,14 @@ That's everything I typed. The agent did the rest.
 
 ## 3. A prompt you can copy for your own item
 
-Paste this into Claude Code after setup (section 4), then fill in the brackets:
+**Short version** (after `sh setup.sh`, the 3d-explainer skill knows the rest):
+
+```text
+Use the 3d-explainer skill to make an English 3D explainer video of [your item] from [path to your .pptx / .pdf spec].
+It's for [who watches it and why]. About [60–120] seconds.
+```
+
+**Long version** (works without the skill): paste this into Claude Code after setup (section 4), then fill in the brackets:
 
 ```text
 Using the lemo-opuscar library (~/lemo-opuscar) in the "Exploded Teardown" style, and OpenMontage's
@@ -130,14 +141,35 @@ Tips:
 ## 4. What you need and how to set it up
 
 **Computer:**
-- Windows 10/11, macOS or Linux, with about 2 GB free disk space.
+- Windows 10/11, macOS or Linux, with at least 5 GB of free disk space. The install takes about 2.2 GB, and each film needs a few hundred MB more.
 - A GPU helps, but plain **Intel UHD graphics worked**: about 0.6 s per frame, so about 25 min to render 80 s.
 
 **Install these first:**
 - Claude Code (with access to a Claude Opus model; lemo-opuscar is tuned for Opus 5.5)
 - Git, Node.js 20+, ffmpeg 7+, and Python 3.11–3.13 (or [uv](https://docs.astral.sh/uv/), which fetches Python itself)
 
-**Get the two libraries and their packages** (Git Bash on Windows, or any terminal):
+On Windows: `winget install Git.Git OpenJS.NodeJS.LTS Gyan.FFmpeg astral-sh.uv`, then reopen Git Bash.
+
+**Then one command does the rest** (Git Bash on Windows, or any terminal):
+```sh
+git clone https://github.com/Chokylion/imi-workstation-video.git ~/imi-workstation-video
+cd ~/imi-workstation-video
+sh setup.sh --check        # optional: see what you already have (changes nothing)
+sh setup.sh                # first run downloads about 1.5 GB and takes 10–20 min
+sh setup.sh --add-rules    # optional: add my working-style rules to ~/.claude/CLAUDE.md
+```
+
+`setup.sh` does the following, and is safe to run again:
+- checks your tools
+- downloads lemo-opuscar and OpenMontage at the exact versions that made this video
+- installs their packages, the voice model, the studio lighting and the instruments, applying all the Windows fixes below
+- copies `skills/` into `~/.claude/skills`, moving any older copy to `~/.claude/skills-backup/` first
+- installs the superpowers plugin
+
+If a library is already cloned, it is left as it is. `setup.sh` only reports the version.
+
+<details><summary><b>Manual setup</b> (what setup.sh does, step by step)</summary>
+
 ```sh
 cd ~
 git clone --depth 1 https://github.com/lemomo-ai/lemo-opuscar.git
@@ -159,6 +191,10 @@ sh tools/fetch.sh instruments vcsl      # mallet instruments (~285 MB)
 - Set `PYTHONUTF8=1` before `tools/fetch.sh` and the voice tools, or they crash printing arrows.
 - Don't run bare `python3` on Windows: the Microsoft Store stub can hang. Use `.venv/Scripts/python.exe`.
 
+More Windows problems and their fixes: [`skills/3d-explainer/references/windows-setup.md`](skills/3d-explainer/references/windows-setup.md).
+
+</details>
+
 Alternatively, lemo-opuscar can be installed as a Claude Code plugin and started with a slash command:
 ```sh
 claude plugin marketplace add lemomo-ai/lemo-opuscar
@@ -167,9 +203,8 @@ claude plugin install lemo-opuscar@lemolab      # then in Claude Code: /lemo-opu
 
 **Rebuild this exact video from the source in this repo:**
 ```sh
-cp -r source/imi-workstation-v2 ~/lemo-opuscar/films/   # or source/imi-workstation for v1
-# fonts (SIL OFL): put Inter.ttf and JetBrainsMono.ttf from github.com/google/fonts (ofl/inter, ofl/jetbrainsmono) into films/imi-workstation-v2/fonts/
-sh ~/lemo-opuscar/films/imi-workstation-v2/build.sh        # voice check → render → mix → master → .srt → checks
+cp -r source/imi-workstation-v2 ~/lemo-opuscar/films/   # or source/imi-workstation for v1 (fonts included, SIL OFL)
+sh ~/lemo-opuscar/films/imi-workstation-v2/build.sh        # voice check → render → mix → master → .srt → checks (WORKERS=2, about 35–40 min)
 ```
 
 ---
@@ -207,8 +242,39 @@ For any non-trivial task:
 ---
 
 ## 6. Honest limits
-- There was no CAD file, so some sizes are illustrations and are never stated as numbers: worktop height, cabinet mounting height, lamp arm lengths, and the contents of the cabinet and cart. See [`FACTS.md`](FACTS.md).
-- Around 16–20 s, a small glint on the light frame makes the panel look slightly lit before the switch moment.
+
+**v2** (the current video):
+- **Conflicts between the slides.** These still need a human to confirm them, and each is logged in [`FACTS-v2.md`](FACTS-v2.md):
+  - worktop thickness: 30 mm or 25 mm (the video uses 30 mm)
+  - outlets: 4 or 8 (the video uses 4)
+  - lower shelf: 350 × 240 or 350 × 2440 (the video states only its 30 mm thickness)
+- The measuring tools in the cabinet are simple models, not the real Mitutoyo products.
+- Around 87–90 s there is about 4 s with music only and no narration.
+- The true peak is −1.0 dB, right at the limit.
 - The power outlets are a generic style, not a specific country's plug type.
 
+**v1:**
+- There was no CAD file, so some sizes are illustrations and are never stated as numbers: worktop height, cabinet mounting height, lamp arm lengths, and the contents of the cabinet and cart. See [`FACTS.md`](FACTS.md).
+- Around 16–20 s, a small glint on the light frame makes the panel look slightly lit before the switch moment. This is fixed in v2.
+
 Credits and licences for everything in the film: [`CREDITS`](CREDITS).
+
+---
+
+## 7. Teaching a co-worker (about 1 hour, plus the render)
+
+1. **Watch first (5 min).** Play the video together, then open [`FACTS-v2.md`](FACTS-v2.md). Every number in the film comes from the spec, and the slides that disagree are listed instead of hidden.
+2. **Install (20 min, mostly waiting).** On their PC: install the tools from section 4, then clone this repo and run `sh setup.sh`. Run `sh setup.sh --check` at the end; every line should show ✓.
+3. **Their own item (15 min of typing).**
+   - Open Claude Code in an empty folder and paste the short prompt from section 3, with their own spec file.
+   - The agent asks **one question at a time**: answer it.
+   - Before it builds anything, it shows `FACTS.md` (check the numbers together) and `TREATMENT.md` (the story and shot list).
+4. **Stills review (10 min).** The agent shows a contact sheet of stills before the long render. This is the cheap moment to ask for changes.
+5. **Render (25–40 min, unattended).** Keep the laptop plugged in, stop it from sleeping, and close heavy apps.
+6. **Check together (10 min).** The agent reports the speech check, the reading-time check, black frames, loudness and any gaps. Watch the film once with sound before sharing it.
+
+Words to know:
+- **Skill:** a folder of instructions Claude Code reads when a task matches.
+- **Plugin:** a packaged set of skills.
+- **Plan mode:** the agent writes a plan and waits for your OK.
+- **CEO review:** the agent re-reads your first request and scores its own work against it.

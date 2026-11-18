@@ -8,7 +8,7 @@ export LIB PYTHONUTF8=1 HF_HUB_DISABLE_SYMLINKS_WARNING=1
 [ -f "$LIB/core/render/video.mjs" ] || { echo "set LIB to the library folder"; exit 1; }
 PY="$LIB/.venv/bin/python"; [ -x "$PY" ] || PY="$LIB/.venv/Scripts/python.exe"
 NAME=imi-workstation
-WORKERS=${WORKERS:-3}
+WORKERS=${WORKERS:-2}        # 3 workers ran a 16 GB laptop out of memory
 cd "$LIB"
 
 [ -f core/assets/polyhaven/photo_studio_loft_hall_2k.hdr ] || sh tools/fetch.sh hdri
